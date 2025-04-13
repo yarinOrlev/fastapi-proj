@@ -10,6 +10,7 @@ app = FastAPI()
 
 @app.get('/blog')
 def index(limit = 10, published: bool = True, sort: Optional[str] = None):
+    logs.logger.info("checking if published is True or False")
     if published:
         return {'data':f'{limit} published blogs from db'}
     else:
@@ -18,6 +19,7 @@ def index(limit = 10, published: bool = True, sort: Optional[str] = None):
 
 @app.get('/blog/unpublished')
 def unpublished():
+    logs.logger.info("returning all unpublished blogs")
     return {'data':'all unpublished blogs'}
 
 @app.get('/blog/{id}')
@@ -33,4 +35,5 @@ def comments(id):
 
 @app.post('/blog')
 def create_blog(created_blog: Blog):
+    logs.logger.info("creating a blog")
     return {'data': f"blog is created with the title {created_blog.title}"}
