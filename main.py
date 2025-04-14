@@ -1,7 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Response
 from typing import Optional
-from pydantic import BaseModel
 from blog.schemas import Blog
+from fastapi import status
 import logs
 
 
@@ -33,7 +33,7 @@ def comments(id):
     return {'data':{'1','2'}}
 
 
-@app.post('/blog')
+@app.post('/blog', status_code=status.HTTP_201_CREATED)
 def create_blog(created_blog: Blog):
     logs.logger.info("creating a blog")
     return {'data': f"blog is created with the title {created_blog.title}"}
